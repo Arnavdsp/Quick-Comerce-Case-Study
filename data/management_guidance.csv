@@ -1,0 +1,20 @@
+platform,metric,value,description,source
+Blinkit,capex_per_store_cr,2.5,Steady-state capex per store incl. warehousing,https://b.zmtcdn.com/investor-relations/Eternal_Limited_Shareholders_Letter_Q1FY27_Results.pdf
+Blinkit,nov_per_store_day_lakh,11.0,Steady-state NOV per store per day,https://b.zmtcdn.com/investor-relations/Eternal_Limited_Shareholders_Letter_Q1FY27_Results.pdf
+Blinkit,nwc_days_of_nov,12.0,"Net working capital, days of NOV",https://b.zmtcdn.com/investor-relations/Eternal_Limited_Shareholders_Letter_Q1FY27_Results.pdf
+Blinkit,adj_ebitda_pct_nov,6.0,Steady-state Adj. EBITDA margin,https://b.zmtcdn.com/investor-relations/Eternal_Limited_Shareholders_Letter_Q1FY27_Results.pdf
+Blinkit,ebit_pct_nov,4.0,Steady-state EBIT margin,https://b.zmtcdn.com/investor-relations/Eternal_Limited_Shareholders_Letter_Q1FY27_Results.pdf
+Blinkit,inventory_loss_pct_nov,1.8,"Current inventory losses (expiry, shrinkage, damage)",https://b.zmtcdn.com/investor-relations/Eternal_Limited_Shareholders_Letter_Q1FY27_Results.pdf
+Blinkit,nwc_cr_q1fy27,2545.0,Net working capital end Q1FY27,https://b.zmtcdn.com/investor-relations/Eternal_Limited_Shareholders_Letter_Q1FY27_Results.pdf
+Instamart,breakeven_nov_runrate_cr,60000.0,Annualised NOV run-rate for Adj. EBITDA breakeven,https://www.swiggy.com/corporate/wp-content/uploads/2026/07/Q1-FY2027-Shareholder-letter.pdf
+Instamart,breakeven_cm_pct,5.5,CM needed at breakeven (5-6% guided; midpoint),https://www.swiggy.com/corporate/wp-content/uploads/2026/07/Q1-FY2027-Shareholder-letter.pdf
+Instamart,breakeven_cm_per_order_inr,30.0,~INR 30 CM per order needed,https://www.swiggy.com/corporate/wp-content/uploads/2026/07/Q1-FY2027-Shareholder-letter.pdf
+Instamart,lever_mix_margin_inr,10.0,"Higher margin & product mix, INR/order",https://www.swiggy.com/corporate/wp-content/uploads/2026/07/Q1-FY2027-Shareholder-letter.pdf
+Instamart,lever_ads_inr,10.0,"Ad revenue, INR/order",https://www.swiggy.com/corporate/wp-content/uploads/2026/07/Q1-FY2027-Shareholder-letter.pdf
+Instamart,lever_automation_inr,5.0,"Densification & automation, INR/order",https://www.swiggy.com/corporate/wp-content/uploads/2026/07/Q1-FY2027-Shareholder-letter.pdf
+Instamart,lever_op_leverage_inr,5.0,"Operating leverage, INR/order",https://www.swiggy.com/corporate/wp-content/uploads/2026/07/Q1-FY2027-Shareholder-letter.pdf
+Instamart,lever_inventory_model_inr,4.5,"Inventory-led (IOCC) model, INR/order (4-5 guided)",https://www.swiggy.com/corporate/wp-content/uploads/2026/07/Q1-FY2027-Shareholder-letter.pdf
+Instamart,store_utilisation_pct,40.0,Current store utilisation (~40%),https://www.swiggy.com/corporate/wp-content/uploads/2026/07/Q1-FY2027-Shareholder-letter.pdf
+Instamart,m1_retention_pct_q1fy27,61.0,1-month retention of transacting users (vs 55% in Q1FY26),https://www.swiggy.com/corporate/wp-content/uploads/2026/07/Q1-FY2027-Shareholder-letter.pdf
+Instamart,stores_cm_positive_pct,45.0,>45% of stores CM positive (30% prior quarter),https://www.swiggy.com/corporate/wp-content/uploads/2026/07/Q1-FY2027-Shareholder-letter.pdf
+Instamart,maxxsaver_mtu_adoption_pct,28.0,Share of MTUs who used Maxxsaver in its launch quarter (Q1FY26),https://www.swiggy.com/corporate/wp-content/uploads/2025/07/Q1-FY2026-Shareholder-letter.pdf

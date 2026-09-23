@@ -1,0 +1,10 @@
+player,metric,value,as_of,basis,source
+Blinkit,dark_stores,2443.0,2026-06-30,Company filing (Q1FY27),https://b.zmtcdn.com/investor-relations/Eternal_Limited_Shareholders_Letter_Q1FY27_Results.pdf
+Blinkit,dark_stores,2511.0,2026-07-31,Bernstein estimate via Business Standard,https://www.business-standard.com/companies/news/beyond-expansion-quick-commerce-seeks-more-growth-from-existing-assets-126080200252_1.html
+Instamart,dark_stores,1171.0,2026-06-30,Company filing (Q1FY27),https://www.swiggy.com/corporate/wp-content/uploads/2026/07/Q1-FY2027-Shareholder-letter.pdf
+Zepto,dark_stores,1139.0,2026-03-31,UDRHP,https://www.sebi.gov.in/sebi_data/commondocs/jun-2026/Zepto%20Limited%20-%20abridged_p.pdf
+Flipkart Minutes,dark_stores,1000.0,2026-07-31,"Bernstein estimate via Business Standard (crossed 1,000)",https://www.business-standard.com/companies/news/beyond-expansion-quick-commerce-seeks-more-growth-from-existing-assets-126080200252_1.html
+Flipkart Minutes,dark_stores,1200.0,2026-09-15,"Company statement (~1,200 micro-fulfilment centres) via Knowledge Sourcing",https://www.knowledge-sourcing.com/report/india-quick-commerce-market
+Amazon Now,dark_stores,650.0,2026-07-31,"Bernstein estimate via Business Standard (600-700, midpoint)",https://www.business-standard.com/companies/news/beyond-expansion-quick-commerce-seeks-more-growth-from-existing-assets-126080200252_1.html
+Industry,monthly_gmv_cr,11000.0,2026-01-31,Redseer (~100% YoY),https://digitalinasia.com/india-quick-commerce-blinkit-zepto-instamart/
+Industry,orders_per_day_mn,7.8,2026-01-31,Redseer,https://digitalinasia.com/india-quick-commerce-blinkit-zepto-instamart/
