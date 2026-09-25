@@ -73,7 +73,7 @@ with st.sidebar:
         "- ₹1 Cr = ₹10 million. ₹1 lakh = ₹100,000."
     )
     st.divider()
-    st.caption("Built by Harshvardhan · data from company filings up to Q1FY27 (Jun 2026). "
+    st.caption("Built by Arnav · data from company filings up to Q1FY27 (Jun 2026). "
                "Zepto is unlisted, so its data stops at Mar 2026 (IPO filing).")
 
 if not plats:
@@ -108,7 +108,7 @@ with tabs[0]:
     left, right = st.columns(2)
     with left:
         st.subheader("Orders per quarter")
-        st.plotly_chart(line(dfv, "orders_mn", plats, " M"), use_container_width=True)
+        st.plotly_chart(line(dfv, "orders_mn", plats, " M"), width="stretch")
         st.caption("Blinkit only started disclosing orders in Q1FY26 (and counts cancelled orders). "
                    "Zepto's last reported quarter is Q4FY26.")
     with right:
@@ -119,7 +119,7 @@ with tabs[0]:
         fig = px.bar(s, x="quarter", y="share", color="platform", color_discrete_map=COL,
                      category_orders={"platform": ["Blinkit", "Instamart"]})
         fig.update_traces(hovertemplate="%{fullData.name}: %{y:.1f}%<extra></extra>", marker_line_color="white", marker_line_width=1.5)
-        st.plotly_chart(style(fig, ysuffix="%").update_yaxes(range=[0, 100]), use_container_width=True)
+        st.plotly_chart(style(fig, ysuffix="%").update_yaxes(range=[0, 100]), width="stretch")
         st.caption("Zepto is left out here because it reports NRV, which isn't directly comparable to NOV.")
 
     # three-way order share where all three report
@@ -127,7 +127,7 @@ with tabs[0]:
     osh = df[df.quarter.isin(common)].pivot_table(index="quarter", columns="platform", values="orders_mn", observed=True)
     osh = (osh.div(osh.sum(axis=1), axis=0) * 100).round(1)
     st.markdown("#### Three-way order share (only quarters where all three disclose orders)")
-    st.dataframe(osh[["Blinkit", "Zepto", "Instamart"]].style.format("{:.1f}%"), use_container_width=True)
+    st.dataframe(osh[["Blinkit", "Zepto", "Instamart"]].style.format("{:.1f}%"), width="stretch")
     st.info(
         f"**What I take from this:** Blinkit's share of Blinkit + Instamart NOV went from {share_then:.0f}% to {share_now:.0f}% in two years. "
         f"On orders, Zepto is a clear #2 ({osh.loc['Q4FY26', 'Zepto']:.0f}% in Q4FY26) and has more than 1.8× Instamart's volume. "
@@ -141,11 +141,11 @@ with tabs[1]:
     a, b = st.columns(2)
     with a:
         st.subheader("Orders per store per day")
-        st.plotly_chart(line(dfv, "orders_per_store_day", plats, hover_fmt=",.0f"), use_container_width=True)
+        st.plotly_chart(line(dfv, "orders_per_store_day", plats, hover_fmt=",.0f"), width="stretch")
         st.caption("Instamart and Zepto report this directly. Blinkit's is my estimate: orders ÷ average stores ÷ 91 days.")
     with b:
         st.subheader("Sales per store per day (₹ lakh)")
-        st.plotly_chart(line(dfv, "value_per_store_day_lakh", plats, "L", "₹"), use_container_width=True)
+        st.plotly_chart(line(dfv, "value_per_store_day_lakh", plats, "L", "₹"), width="stretch")
         st.caption("NOV for Blinkit & Instamart, NRV for Zepto. My Blinkit estimate is within ±4% of the figure Blinkit publishes.")
 
     zq = Z.loc["Q4FY26"]
@@ -159,7 +159,7 @@ with tabs[1]:
     c, d = st.columns(2)
     with c:
         st.subheader("Fixed cost per store per day (₹ '000)")
-        st.plotly_chart(line(dfv, "fixed_per_store_day_k", [p for p in plats if p != "Zepto"], "k", "₹"), use_container_width=True)
+        st.plotly_chart(line(dfv, "fixed_per_store_day_k", [p for p in plats if p != "Zepto"], "k", "₹"), width="stretch")
         st.caption("Fixed cost = contribution − Adj. EBITDA (overheads, tech, brand marketing). Zepto doesn't disclose contribution.")
     with d:
         st.subheader("Operating leverage")
@@ -175,13 +175,13 @@ with tabs[1]:
         fig.update_layout(hovermode="closest")
         fig.update_xaxes(title="Sales per store per day (₹ lakh)")
         fig.update_yaxes(title="Adj. EBITDA margin")
-        st.plotly_chart(fig, use_container_width=True)
+        st.plotly_chart(fig, width="stretch")
         st.caption("Each dot is one quarter. Up and to the right is better.")
 
 # ======================================================================
 with tabs[2]:
     st.subheader("Adj. EBITDA per order (₹)")
-    st.plotly_chart(line(dfv, "ebitda_per_order", plats, yprefix="₹", hover_fmt=",.0f"), use_container_width=True)
+    st.plotly_chart(line(dfv, "ebitda_per_order", plats, yprefix="₹", hover_fmt=",.0f"), width="stretch")
     st.caption("Zepto's figure is as reported in its IPO filing. Blinkit & Instamart = Adj. EBITDA ÷ orders.")
 
     st.subheader("Where one order's money goes")
@@ -203,10 +203,10 @@ with tabs[2]:
             totals=dict(marker_color="#31333F"), connector=dict(line=dict(color="#bdbdbd"))))
         fig = style(fig, 340, yprefix="₹", legend=False)
         fig.update_layout(hovermode=False)
-        st.plotly_chart(fig, use_container_width=True)
+        st.plotly_chart(fig, width="stretch")
 
     st.subheader("Contribution margin (% of NOV)")
-    st.plotly_chart(line(dfv, "cm_pct", [p for p in plats if p != "Zepto"], "%", height=320), use_container_width=True)
+    st.plotly_chart(line(dfv, "cm_pct", [p for p in plats if p != "Zepto"], "%", height=320), width="stretch")
     st.caption("Instamart reports this as % of GOV; I restated it to % of NOV so it lines up with Blinkit.")
 
 # ======================================================================
@@ -215,10 +215,10 @@ with tabs[3]:
     a, b = st.columns(2)
     with a:
         st.subheader("Orders per user per month")
-        st.plotly_chart(line(dfv, "freq_per_month", [p for p in plats if p != "Zepto"], hover_fmt=".2f"), use_container_width=True)
+        st.plotly_chart(line(dfv, "freq_per_month", [p for p in plats if p != "Zepto"], hover_fmt=".2f"), width="stretch")
     with b:
         st.subheader("Basket size (₹ per order)")
-        st.plotly_chart(line(dfv, "value_per_order", plats, yprefix="₹", hover_fmt=",.0f"), use_container_width=True)
+        st.plotly_chart(line(dfv, "value_per_order", plats, yprefix="₹", hover_fmt=",.0f"), width="stretch")
         st.caption("NOV per order for Blinkit/Instamart; NRV per order for Zepto (includes ads & fees, so a bit inflated).")
 
     st.subheader("What drove NOV growth?")
@@ -243,7 +243,7 @@ with tabs[3]:
         fig = style(fig, 260, ysuffix="")
         fig.update_layout(barmode="relative", hovermode="closest")
         fig.update_xaxes(title="Percentage points of NOV growth", ticksuffix=" pts", showgrid=True, gridcolor="#ececec")
-        st.plotly_chart(fig, use_container_width=True)
+        st.plotly_chart(fig, width="stretch")
         tot = dec[dec.driver == "Total"].set_index("platform").pp
         st.caption(f"Total NOV growth {q0} → {q1}: Blinkit {tot['Blinkit']:.0f}%, Instamart {tot['Instamart']:.0f}%.")
 
@@ -311,7 +311,7 @@ with tabs[4]:
         fig = style(fig, 420, legend=False)
         fig.update_xaxes(title="Annual NOV (₹ Cr)")
         fig.update_yaxes(title="Contribution margin", zeroline=False)
-        st.plotly_chart(fig, use_container_width=True)
+        st.plotly_chart(fig, width="stretch")
         st.caption(f"Uses fixed costs of ₹{fx:,.0f} Cr a quarter (your setting above). Blue = profit, red = loss.")
 
     st.markdown(
@@ -332,7 +332,7 @@ with tabs[5]:
     fig = style(fig, 320, legend=False)
     fig.update_xaxes(range=[0, ctx.value.max() * 1.3], title="Dark stores (latest figure I could find)")
     fig.update_layout(hovermode="closest")
-    st.plotly_chart(fig, use_container_width=True)
+    st.plotly_chart(fig, width="stretch")
     st.caption("Blinkit, Instamart and Zepto from filings. Flipkart Minutes and Amazon Now are Bernstein estimates or company statements "
                "(reported by Business Standard), so treat them as approximate. Redseer puts the whole market at about ₹11,000 Cr GMV a month "
                "(Jan 2026), roughly doubling year on year.")
@@ -346,7 +346,7 @@ with tabs[5]:
     v = vals.copy()
     v["as of"] = v.as_of.dt.strftime("%b %Y")
     v["value"] = np.where(v.metric == "market_cap_cr", v.value.map(lambda x: f"₹{x:,.0f} Cr"), v.value.map(lambda x: f"${x:.2f} bn"))
-    st.dataframe(v[["company", "value", "as of", "basis"]], hide_index=True, use_container_width=True)
+    st.dataframe(v[["company", "value", "as of", "basis"]], hide_index=True, width="stretch")
     st.caption("Eternal and Swiggy market caps include their food delivery businesses, so they're not pure quick-commerce valuations. "
                "Zepto's July 2026 figure is an implied price from unlisted-share trading, not a funding round.")
 
@@ -370,7 +370,7 @@ with tabs[6]:
     for c in shown.columns:
         if pd.api.types.is_datetime64_any_dtype(shown[c]):
             shown[c] = shown[c].dt.strftime("%d %b %Y")
-    st.dataframe(shown, hide_index=True, use_container_width=True,
+    st.dataframe(shown, hide_index=True, width="stretch",
                  column_config={"source": st.column_config.LinkColumn("source", display_text="link")})
     st.download_button("Download this table (CSV)", tbl.to_csv(index=False).encode(), file_name=f"{show.split(' ')[0].lower()}.csv", mime="text/csv")
     st.caption("Not affiliated with any of these companies. Nothing here is investment advice.")
