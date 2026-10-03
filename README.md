@@ -32,6 +32,7 @@ data/
   valuations.csv                  # market caps / Zepto valuation marks
 charts/                           # exported PNGs from the notebook
 scripts/build_data.py             # rebuilds the Blinkit/Instamart panel
+tests/                            # headline numbers via metrics.py; every dashboard tab and widget
 .streamlit/config.toml            # theme
 ```
 
@@ -49,9 +50,8 @@ scripts/build_data.py             # rebuilds the Blinkit/Instamart panel
 pip install -r requirements.txt
 streamlit run app.py                          # dashboard
 jupyter notebook quick_commerce_case_study.ipynb   # analysis
+pip install pytest && python -m pytest -q          # headline numbers + dashboard smoke test
 ```
-
-**Put the dashboard online (free):** push this folder to a public GitHub repo, go to [share.streamlit.io](https://share.streamlit.io), click *Create app*, pick the repo and `app.py`. You get a public `*.streamlit.app` link for your resume.
 
 ## Dashboard tabs
 | Tab | What it answers |
