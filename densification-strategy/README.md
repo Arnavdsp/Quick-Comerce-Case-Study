@@ -77,6 +77,11 @@ Swiggy's Q2FY27 results came out in October 2026, after the baseline. Orders per
 - **Play sizes** are my estimates. They're all in one place (`PLAYS` in `model.py`) so anyone can change them and rebuild.
 - Capex per store uses Blinkit's guided ₹2.5 Cr; Instamart doesn't disclose its own.
 
+## Power BI dashboard
+[`powerbi/`](powerbi/) has everything to build a five-page Power BI version of this plan: the data tables, every DAX measure, a theme, page mock-ups and a step-by-step [build guide](powerbi/BUILD_GUIDE.md). Page 3 is a live simulator: drag how much of the plan gets delivered, the store-cost estimate or Swiggy's per-order levers, and watch the break-even lines move.
+
+![Simulator page](powerbi/mockups/page_3.png)
+
 ## Rebuild it
 ```bash
 cd densification-strategy
@@ -84,6 +89,7 @@ python model.py          # prints every number in the deck
 python charts.py         # redraws charts/
 python build_deck.py     # writes the .pptx (needs python-pptx)
 python -m pytest -q      # headline numbers, including the downside cases
+python powerbi/export_powerbi.py && python powerbi/mockups.py   # Power BI tables, mock-ups, guide tables
 ```
 
 ## Sources

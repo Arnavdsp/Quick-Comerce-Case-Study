@@ -1,0 +1,7 @@
+Metric,Platform,Value,SortOrder
+Users per store,Instamart,11528.608,1
+Users per store,Blinkit,13016.783,1
+Orders per user per month,Instamart,2.827,2
+Orders per user per month,Blinkit,3.47,2
+Orders per store per day,Instamart,1071.558,3
+Orders per store per day,Blinkit,1484.813,3

@@ -1,0 +1,213 @@
+// Instamart densification dashboard: every measure, in the order the build guide adds them.
+// Paste each one into Modeling > New measure on the _Measures table.
+// Table and parameter names must match BUILD_GUIDE.md exactly.
+// ₹ figures are rupees unless the measure name says Cr, L (lakh) or k.
+
+
+// ============================================================
+// 1. Market: built on fact_quarterly (filters by Platform and Quarter)
+// ============================================================
+
+NOV Cr = SUM ( fact_quarterly[NOV_Cr] )
+// format: #,0
+
+Orders Mn = SUM ( fact_quarterly[Orders_Mn] )
+// format: #,0.0
+
+NOV per Store-Day L =
+DIVIDE ( [NOV Cr] * 100, SUM ( fact_quarterly[StoreDays] ) )
+// ₹ Cr x 1e7 / store-days / 1e5 = Cr x 100 / store-days.  format: "₹"0.00"L"
+
+Orders per Store-Day =
+DIVIDE ( [Orders Mn] * 1e6, SUM ( fact_quarterly[StoreDays] ) )
+// format: #,0
+
+Order Frequency =
+DIVIDE ( [Orders Mn], SUM ( fact_quarterly[UserMonths_Mn] ) )
+// orders per user per month.  format: 0.00
+
+Net AOV =
+DIVIDE ( [NOV Cr] * 1e7, [Orders Mn] * 1e6 )
+// format: "₹"#,0
+
+Contribution % NOV =
+DIVIDE ( SUM ( fact_quarterly[Contribution_Cr] ), [NOV Cr] )
+// format: 0.0%
+
+EBITDA per Order =
+DIVIDE ( SUM ( fact_quarterly[AdjEBITDA_Cr] ) * 1e7, [Orders Mn] * 1e6 )
+// format: "₹"#,0;"−₹"#,0
+
+HQ Cost per Store-Day k =
+DIVIDE ( SUM ( fact_quarterly[HQFixed_Cr] ) * 1e7, SUM ( fact_quarterly[StoreDays] ) ) / 1000
+// format: "₹"0"k"
+
+Blinkit Share of NOV =
+DIVIDE (
+    CALCULATE ( [NOV Cr], dim_platform[Platform] = "Blinkit" ),
+    CALCULATE ( [NOV Cr], REMOVEFILTERS ( dim_platform ) )
+)
+// format: 0%
+
+Instamart NOV per Store-Day L =
+CALCULATE ( [NOV per Store-Day L], dim_platform[Platform] = "Instamart", dim_quarter[Quarter] = "Q1FY27" )
+
+Blinkit NOV per Store-Day L =
+CALCULATE ( [NOV per Store-Day L], dim_platform[Platform] = "Blinkit", dim_quarter[Quarter] = "Q1FY27" )
+
+Throughput Gap % =
+1 - DIVIDE ( [Instamart NOV per Store-Day L], [Blinkit NOV per Store-Day L] )
+// format: 0%   (expect 31%)
+
+
+// ============================================================
+// 2. Baseline: one-row table, Q1FY27 average Instamart store
+// ============================================================
+
+Base Stores = MAX ( baseline[Stores] )
+Base NOV Day = MAX ( baseline[StoreNOV_Day] )
+Base Orders Day = MAX ( baseline[StoreOrders_Day] )
+Base AOV = MAX ( baseline[NetAOV] )
+Base CM % = MAX ( baseline[CM_Pct] )
+Base HQ Fixed Day = MAX ( baseline[HQFixed_Day] )
+Store SD = MAX ( baseline[StoreSD] )
+
+Base Contribution Day = [Base NOV Day] * [Base CM %]
+
+
+// ============================================================
+// 3. Simulator: driven by the four what-if parameters
+//    'Plan Delivery'[Plan Delivery Value]        0 to 150, default 100  (% of planned uplift)
+//    'Store Cost'[Store Cost Value]              30000 to 45000, default 38000  (₹ rent + staff per store-day)
+//    'Per Order Levers'[Per Order Levers Value]  0 to 30, default 24.5  (₹ per order from ads, mix, 1P)
+//    'Programme Spend'[Programme Spend Value]    0 to 20, default 10  (₹ per added order)
+// ============================================================
+
+Semi Fixed Day = 'Store Cost'[Store Cost Value]
+
+Variable Margin =
+DIVIDE ( [Base Contribution Day] + [Semi Fixed Day], [Base NOV Day] )
+// share of each extra rupee of NOV the store keeps.  format: 0.0%  (expect 6.6%)
+
+Uplift NOV Day =
+CALCULATE ( SUM ( plays[NOV_Day] ), plays[InPlan] = TRUE () )
+    * 'Plan Delivery'[Plan Delivery Value] / 100
+// respects a slicer on plays[Play], so you can switch plays on and off.  format: "₹"#,0
+
+Orders Added Day =
+CALCULATE ( SUM ( plays[OrdersAdded_Day] ), plays[InPlan] = TRUE () )
+    * 'Plan Delivery'[Plan Delivery Value] / 100
+
+New NOV Day = [Base NOV Day] + [Uplift NOV Day]
+
+New NOV Day L = [New NOV Day] / 1e5
+// format: "₹"0.00"L"
+
+CM % Before =
+DIVIDE ( [Base NOV Day] * [Variable Margin] - [Semi Fixed Day], [Base NOV Day] )
+// format: +0.0%;−0.0%
+
+CM % After =
+DIVIDE ( [New NOV Day] * [Variable Margin] - [Semi Fixed Day], [New NOV Day] )
+// format: +0.0%;−0.0%
+
+Store Breakeven NOV L =
+DIVIDE ( [Semi Fixed Day], [Variable Margin] ) / 1e5
+// format: "₹"0.00"L"
+
+Stores CM Positive Before =
+1 - NORM.DIST ( [Store Breakeven NOV L] * 1e5, [Base NOV Day], [Store SD], TRUE () )
+// format: 0%
+
+Stores CM Positive After =
+1 - NORM.DIST ( [Store Breakeven NOV L] * 1e5, [New NOV Day], [Store SD], TRUE () )
+// format: 0%
+
+Annual Added NOV Cr = [Uplift NOV Day] * [Base Stores] * 365 / 1e7
+Annual Added Contribution Cr = [Annual Added NOV Cr] * [Variable Margin]
+Annual Programme Cost Cr =
+[Orders Added Day] * [Base Stores] * 365 * 'Programme Spend'[Programme Spend Value] / 1e7
+Annual Net Contribution Cr = [Annual Added Contribution Cr] - [Annual Programme Cost Cr]
+// all four: format #,0
+
+Share of EBITDA Loss Closed =
+DIVIDE ( [Annual Net Contribution Cr], MAX ( baseline[AnnualEBITDALoss_Cr] ) )
+// format: 0%
+
+Stores Needed Today =
+DIVIDE ( MAX ( baseline[BreakevenNOV_Cr] ) * 1e7, [Base NOV Day] * 365 )
+
+Stores Needed After =
+DIVIDE ( MAX ( baseline[BreakevenNOV_Cr] ) * 1e7, [New NOV Day] * 365 )
+
+Stores Needed at Blinkit Target =
+DIVIDE ( MAX ( baseline[BreakevenNOV_Cr] ) * 1e7, MAX ( baseline[BlinkitTargetNOV_Day] ) * 365 )
+
+Stores Avoided = [Stores Needed Today] - [Stores Needed After]
+Capex Avoided Cr = [Stores Avoided] * MAX ( baseline[CapexPerStore_Cr] )
+// format: #,0
+
+Utilisation After =
+MAX ( baseline[Utilisation_Pct] ) / 100 * DIVIDE ( [Base Orders Day] + [Orders Added Day], [Base Orders Day] )
+// format: 0%
+
+EBITDA Breakeven NOV L =
+DIVIDE (
+    [Semi Fixed Day] + [Base HQ Fixed Day],
+    [Variable Margin] + DIVIDE ( 'Per Order Levers'[Per Order Levers Value], [Base AOV] )
+) / 1e5
+// format: "₹"0.0"L"  (expect ₹9.7L)
+
+
+// ============================================================
+// 4. Curves: x axis is 'NOV Grid'[NOV_Lakh]
+//    NOV Grid = SELECTCOLUMNS ( GENERATESERIES ( 0, 13, 0.1 ), "NOV_Lakh", [Value] )
+// ============================================================
+
+Grid NOV = SELECTEDVALUE ( 'NOV Grid'[NOV_Lakh] ) * 1e5
+
+Contribution per Store-Day k =
+( [Grid NOV] * [Variable Margin] - [Semi Fixed Day] ) / 1000
+
+EBITDA per Store-Day Today k =
+( [Grid NOV] * [Variable Margin] - [Semi Fixed Day] - [Base HQ Fixed Day] ) / 1000
+
+EBITDA per Store-Day With Levers k =
+(
+    [Grid NOV] * ( [Variable Margin] + DIVIDE ( 'Per Order Levers'[Per Order Levers Value], [Base AOV] ) )
+        - [Semi Fixed Day] - [Base HQ Fixed Day]
+) / 1000
+
+Store Density Today =
+NORM.DIST ( [Grid NOV], [Base NOV Day], [Store SD], FALSE () ) * 1e5
+
+Store Density After =
+NORM.DIST ( [Grid NOV], [New NOV Day], [Store SD], FALSE () ) * 1e5
+
+Store Density After Above BE =
+IF ( [Grid NOV] >= [Store Breakeven NOV L] * 1e5, [Store Density After] )
+
+
+// ============================================================
+// 5. Text for titles and cards
+// ============================================================
+
+Simulator Headline =
+"₹" & FORMAT ( [Uplift NOV Day] / 1e5, "0.00" ) & "L more per store per day takes contribution from "
+    & FORMAT ( [CM % Before], "+0.0%;−0.0%" ) & " to " & FORMAT ( [CM % After], "+0.0%;−0.0%" )
+    & " and stores in the black from " & FORMAT ( [Stores CM Positive Before], "0%" )
+    & " to " & FORMAT ( [Stores CM Positive After], "0%" )
+
+Breakeven Status =
+IF ( [CM % After] >= 0, "Contribution break-even: crossed", "Contribution break-even: not yet" )
+
+
+// ============================================================
+// 6. Small helpers used on the scorecard page
+// ============================================================
+
+Base NOV Day L = [Base NOV Day] / 1e5
+// format: "₹"0.00"L"
+
+Utilisation Today = MAX ( baseline[Utilisation_Pct] ) / 100
+// format: 0%

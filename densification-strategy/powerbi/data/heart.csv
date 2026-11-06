@@ -1,0 +1,7 @@
+Dimension,Goal,Signal,Metric,Baseline,Target,SortOrder
+Happiness,People trust the morning and fresh orders,Fewer complaints on fresh,"Fresh complaints per 1,000 orders; morning-slot CSAT",Not public,Below today; CSAT 4.5+,1
+Engagement,Instamart becomes a daily app,More orders and categories per user,Orders per MTU per month,2.83,3.08,2
+Adoption,The new behaviours get picked up,Sign-ups and first orders,% MTU on Morning Ritual; % food-only users trying Instamart,0%; 0%,8-10%; 8%,3
+Retention,First-timers stay,Users still ordering after a month,M1 retention; day-60 survival of won-back users,61%,65%; 40%+,4
+Task success,The order arrives complete and on time,Fewer substitutions and misses,Fill rate on top-200 SKUs; on-time % in 6-9 am slot,Not public,98%+; 95%+,5
+Guardrail,Growth doesn't cost margin or riders,Stop if breached,Contribution per added order; peak-hour on-time %; rider earnings per hour,,20+ per order; no worse than control; no lower,6

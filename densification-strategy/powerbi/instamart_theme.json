@@ -1,0 +1,56 @@
+{
+  "name": "Instamart densification",
+  "dataColors": ["#EB6834", "#2A78D6", "#A3A29C", "#2F8F5B", "#C9442F", "#1F2430", "#F6C9B5", "#55544F"],
+  "foreground": "#1D1D1B",
+  "foregroundNeutralSecondary": "#55544F",
+  "foregroundNeutralTertiary": "#8C8B85",
+  "background": "#FFFFFF",
+  "backgroundLight": "#F3F3F1",
+  "backgroundNeutral": "#DDDCD7",
+  "tableAccent": "#EB6834",
+  "good": "#2F8F5B",
+  "neutral": "#A3A29C",
+  "bad": "#C9442F",
+  "maximum": "#EB6834",
+  "center": "#F3F3F1",
+  "minimum": "#2A78D6",
+  "textClasses": {
+    "title": { "fontFace": "Segoe UI Semibold", "fontSize": 13, "color": "#1D1D1B" },
+    "header": { "fontFace": "Segoe UI Semibold", "fontSize": 12, "color": "#1D1D1B" },
+    "label": { "fontFace": "Segoe UI", "fontSize": 10, "color": "#55544F" },
+    "callout": { "fontFace": "Segoe UI Semibold", "fontSize": 28, "color": "#EB6834" }
+  },
+  "visualStyles": {
+    "*": {
+      "*": {
+        "background": [{ "show": true, "color": { "solid": { "color": "#FFFFFF" } }, "transparency": 0 }],
+        "border": [{ "show": false }],
+        "dropShadow": [{ "show": false }],
+        "visualHeader": [{ "show": false }],
+        "title": [{ "show": true, "fontSize": 12, "fontColor": { "solid": { "color": "#1D1D1B" } }, "alignment": "left" }]
+      }
+    },
+    "page": {
+      "*": {
+        "background": [{ "color": { "solid": { "color": "#F3F3F1" } }, "transparency": 0 }]
+      }
+    },
+    "card": {
+      "*": {
+        "labels": [{ "color": { "solid": { "color": "#EB6834" } }, "fontSize": 26 }],
+        "categoryLabels": [{ "color": { "solid": { "color": "#55544F" } }, "fontSize": 10 }]
+      }
+    },
+    "lineChart": {
+      "*": {
+        "lineStyles": [{ "strokeWidth": 3 }],
+        "valueAxis": [{ "gridlineColor": { "solid": { "color": "#E6E5E1" } } }]
+      }
+    },
+    "slicer": {
+      "*": {
+        "background": [{ "show": true, "color": { "solid": { "color": "#FDF0EA" } } }]
+      }
+    }
+  }
+}

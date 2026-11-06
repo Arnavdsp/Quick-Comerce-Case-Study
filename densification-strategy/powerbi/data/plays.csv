@@ -1,0 +1,10 @@
+Play,InPlan,Status,Ease,NOV_Day,Impact_k,OrdersAdded_Day,What,Target,SortOrder
+Morning Ritual + fresh,True,In the plan,3.0,48139.2,48.1,94.756,"Milk, bread, eggs, curd and a fruit-and-veg box on a 6-9 am batched slot; scale Nectr with a replacement promise",Orders per user per month 2.83 to 3.08,1
+Swiggy-to-Mart bridge,True,In the plan,4.45,17370.62,17.4,34.192,"Offer tomorrow's milk on the Swiggy food-tracking screen; one cart, one fee",8% of food-only users in a radius try Instamart,2
+Win back the lapsed,True,In the plan,4.2,19374.92,19.4,38.137,"Diagnose why each one-time user left and send the fix, not a blanket coupon",About 580 users per store back at 2 orders a month,3
+Bigger basket,True,In the plan,3.4,18818.82,18.8,0.0,"Private label, recipe add-ons, Maxxsaver thresholds set per store",Net AOV 508 to 523,4
+Retune radius of under-used stores,False,Parked,2.0,15000.0,15.0,0.0,Phase 2: needs rider and SLA work,,5
+Afternoon fee holiday,False,Parked,3.9,7000.0,7.0,0.0,Folded into the morning-slot test,,6
+Blanket free delivery,False,Rejected,4.8,31000.0,31.0,0.0,Margin-negative; rents demand; easy to copy,,7
+Sub-10-minute promise,False,Rejected,1.0,6000.0,6.0,0.0,Regulatory headwind since Jan-26,,8
+New stores in served micro-markets,False,Rejected,2.2,-10000.0,-10.0,0.0,"Splits demand, lowers throughput",,9
